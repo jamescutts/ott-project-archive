@@ -18,6 +18,7 @@ export type Content = {
   Type: string;
   Content?: any;
   Image?: Image;
+  Images?: [Image];
   Url?: string;
 };
 
