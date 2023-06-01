@@ -112,7 +112,6 @@ export default function Posts(props: Props) {
                   ? 6
                   : 3
               }
-              key={project._id}
             >
               <Card
                 css={{ w: "100%", h: "400px" }}
@@ -148,7 +147,7 @@ export default function Posts(props: Props) {
                     objectFit="cover"
                     width="100%"
                     height="100%"
-                    alt={project.Title}
+                    alt={project.Title.toString()}
                   />
                 </Card.Body>
                 <Card.Footer>
