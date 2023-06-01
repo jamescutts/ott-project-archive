@@ -7,6 +7,8 @@ import {
   User,
   Badge,
   Grid,
+  Card,
+  Col,
 } from "@nextui-org/react";
 import Layout from "../../components/layout";
 import { useRouter } from "next/router";
@@ -17,6 +19,7 @@ import { Entry } from "../../models/entry";
 
 interface Props {
   project?: Project;
+  entries?: [Entry];
 }
 
 export async function getServerSideProps(context: { query: { id: any } }) {
@@ -27,8 +30,14 @@ export async function getServerSideProps(context: { query: { id: any } }) {
 
     let project = await res.json();
 
+    const eres = await fetch(`${process.env.API_URL}entries/${id}`);
+    let entries = await eres.json();
+
     return {
-      props: { project: JSON.parse(JSON.stringify(project)) },
+      props: {
+        project: JSON.parse(JSON.stringify(project)),
+        entries: JSON.parse(JSON.stringify(entries)),
+      },
     };
   } catch (error) {
     console.error(error);
@@ -39,6 +48,7 @@ export async function getServerSideProps(context: { query: { id: any } }) {
 }
 export default function ProjectPage(props: Props) {
   const [project, setProject] = useState<Project | undefined>(props.project);
+  const [entries, setEntries] = useState<[Entry] | undefined>(props.entries);
 
   return (
     <Layout>
@@ -87,6 +97,30 @@ export default function ProjectPage(props: Props) {
 
         <Spacer y={2} />
       </Container>
+
+      {entries?.map((entry) => (
+        <div key={entry._id}>
+          <Container sm>
+            <Card>
+              <Card.Header>
+                <Col>
+                  <Text h2>{entry.Title}</Text>
+                  <Text size={12} weight="bold" transform="uppercase">
+                    {entry.Date}
+                  </Text>
+                </Col>
+              </Card.Header>
+              <Card.Divider />
+              <Card.Body>
+                {entry.Content?.map((content) => (
+                  <h3>{content.Type}</h3>
+                ))}
+              </Card.Body>
+            </Card>
+          </Container>
+          <Spacer y={2} />
+        </div>
+      ))}
     </Layout>
   );
 }
