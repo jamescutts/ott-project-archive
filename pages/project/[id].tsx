@@ -115,7 +115,34 @@ export default function ProjectPage(props: Props) {
                   <Card.Divider />
                   <Card.Body>
                     {entry.Content?.map((content) => (
-                      <h3>{content.Type}</h3>
+                      <>
+                        {content.Type === "text" && (
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: content.Content,
+                            }}
+                          />
+                        )}
+                        {content.Type === "image-large" &&
+                          content.Image?.Url && (
+                            <Image
+                              // height={500}
+                              src={content.Image?.Url?.toString()}
+                              alt={content.Image?.Alt?.toString()}
+                              objectFit="cover"
+                            />
+                          )}
+                        {content.Type === "image-gallery" && (
+                          <h3>{content.Type}</h3>
+                        )}
+                        {content.Type === "list" && (
+                          <h3>{content.Type}</h3>
+                        )}
+                        {content.Type === "embed" && (
+                          <iframe width="637" height="358" src={content.Url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title={entry.Title?.toString()}></iframe>
+                        )}
+                        <Spacer y={1} />
+                      </>
                     ))}
                   </Card.Body>
                 </Card>
