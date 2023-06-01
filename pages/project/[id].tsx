@@ -87,8 +87,12 @@ export default function ProjectPage(props: Props) {
             <Row>
               <Col>
                 <User
-                  src={`https://i.pravatar.cc/300?u=${project?.author_id}`}
-                  name={project?.author_id}
+                  src={
+                    project.Author
+                      ? project.Author.ImageUrl
+                      : `https://i.pravatar.cc/300?u=${project.author_id}`
+                  }
+                  name={project.author_id}
                   description={`@${project?.author_id}`}
                   size="lg"
                 />
