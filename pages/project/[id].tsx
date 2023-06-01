@@ -98,29 +98,33 @@ export default function ProjectPage(props: Props) {
         <Spacer y={2} />
       </Container>
 
-      {entries?.map((entry) => (
-        <div key={entry._id}>
-          <Container sm>
-            <Card>
-              <Card.Header>
-                <Col>
-                  <Text h2>{entry.Title}</Text>
-                  <Text size={12} weight="bold" transform="uppercase">
-                    {entry.Date}
-                  </Text>
-                </Col>
-              </Card.Header>
-              <Card.Divider />
-              <Card.Body>
-                {entry.Content?.map((content) => (
-                  <h3>{content.Type}</h3>
-                ))}
-              </Card.Body>
-            </Card>
-          </Container>
-          <Spacer y={2} />
-        </div>
-      ))}
+      {entries && (
+        <>
+          {entries.map((entry) => (
+            <div>
+              <Container sm>
+                <Card>
+                  <Card.Header>
+                    <Col>
+                      <Text h2>{entry.Title}</Text>
+                      <Text size={12} weight="bold" transform="uppercase">
+                        {entry.Date}
+                      </Text>
+                    </Col>
+                  </Card.Header>
+                  <Card.Divider />
+                  <Card.Body>
+                    {entry.Content?.map((content) => (
+                      <h3>{content.Type}</h3>
+                    ))}
+                  </Card.Body>
+                </Card>
+              </Container>
+              <Spacer y={2} />
+            </div>
+          ))}
+        </>
+      )}
     </Layout>
   );
 }
