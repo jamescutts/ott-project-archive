@@ -20,7 +20,7 @@ type Props = {
 
 export const getServerSideProps = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/projects");
+    const res = await fetch(`${process.env.API_URL}projects`);
     let projects = await res.json();
 
     return {

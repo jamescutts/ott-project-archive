@@ -51,7 +51,7 @@ export type Project = {
 
 export const getServerSideProps = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/projects");
+    const res = await fetch(`${process.env.API_URL}projects`);
     let projects = await res.json();
 
     return {
@@ -112,6 +112,7 @@ export default function Posts(props: Props) {
                   ? 6
                   : 3
               }
+              key={project._id}
             >
               <Link href={`/project/${project._id}`}>
                 <Card css={{ w: "100%", h: "400px" }} isPressable isHoverable>
