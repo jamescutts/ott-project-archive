@@ -44,47 +44,47 @@ export default function Projects(props: Props) {
         <Grid.Container gap={2}>
           {projects.map((project) => (
             <Grid xs={3} key={project._id}>
-              <Card
-                css={{ w: "100%", h: "400px" }}
-                isPressable
-                isHoverable
-                as={Link}
-                href={`/project/${project._id}`}
-              >
-                <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-                  <Col>
-                    <Text
-                      size={12}
-                      weight="bold"
-                      transform="uppercase"
-                      color="#9E9E9E"
-                    >
-                      {project.Genre}
-                    </Text>
-                    <Text h3 color="white">
-                      {project.Title}
-                    </Text>
-                  </Col>
-                </Card.Header>
-                <Card.Body css={{ p: 0 }}>
-                  <Card.Image
-                    src={project.HeaderImage}
-                    objectFit="cover"
-                    width="100%"
-                    height="100%"
-                    alt={project.Title}
-                  />
-                </Card.Body>
-                <Card.Footer>
-                  <Row>
-                    <User
-                      src={`https://i.pravatar.cc/300?u=${project.author_id}`}
-                      name={project.author_id}
-                      bordered
-                    />
-                  </Row>
-                </Card.Footer>
-              </Card>
+              <Link href={`/project/${project._id}`}>
+                <Card css={{ w: "100%", h: "400px" }} isPressable isHoverable>
+                  <Card.Header
+                    css={{ position: "absolute", zIndex: 1, top: 5 }}
+                  >
+                    <Col>
+                      <Text
+                        size={12}
+                        weight="bold"
+                        transform="uppercase"
+                        color="#9E9E9E"
+                      >
+                        {project.Genre}
+                      </Text>
+                      <Text h3 color="white">
+                        {project.Title}
+                      </Text>
+                    </Col>
+                  </Card.Header>
+                  <Card.Body css={{ p: 0 }}>
+                    {project.HeaderImage && (
+                      <Card.Image
+                        src={project.HeaderImage}
+                        objectFit="cover"
+                        width="100%"
+                        height="100%"
+                        alt={project.Title}
+                      />
+                    )}
+                  </Card.Body>
+                  <Card.Footer>
+                    <Row>
+                      <User
+                        src={`https://i.pravatar.cc/300?u=${project.author_id}`}
+                        name={project.author_id}
+                        bordered
+                      />
+                    </Row>
+                  </Card.Footer>
+                </Card>
+              </Link>
             </Grid>
           ))}
         </Grid.Container>

@@ -20,29 +20,29 @@ type Props = {
 };
 
 type Author = {
-  _id: String;
-  ImageUrl: String;
-  GoldenButton: String;
+  _id: string;
+  ImageUrl: string;
+  GoldenButton: string;
 };
 
 export type Project = {
-  _id: String;
+  _id: string;
 
-  Title: String;
+  Title: string;
 
-  Url: String;
+  Url: string;
 
-  Description?: String;
+  Description?: string;
 
-  HeaderImage?: String;
+  HeaderImage?: string;
 
-  author_id?: String;
+  author_id?: string;
 
-  Game?: String;
+  Game?: string;
 
-  Company?: String;
+  Company?: string;
 
-  Genre?: String;
+  Genre?: string;
 
   Active: boolean;
 
@@ -113,63 +113,60 @@ export default function Posts(props: Props) {
                   : 3
               }
             >
-              <Card
-                css={{ w: "100%", h: "400px" }}
-                isPressable
-                isHoverable
-                as={Link}
-                href={`/project/${project._id}`}
-              >
-                <Card.Header
-                  css={{
-                    position: "absolute",
-                    zIndex: 1,
-                    top: 5,
-                  }}
-                >
-                  <Col>
-                    <Text
-                      size={12}
-                      weight="bold"
-                      transform="uppercase"
-                      color="#9E9E9E"
-                    >
-                      {project.Genre}
-                    </Text>
-                    <Text h3 color="white">
-                      {project.Title}
-                    </Text>
-                  </Col>
-                </Card.Header>
-                <Card.Body css={{ p: 0 }}>
-                  <Card.Image
-                    src={project.HeaderImage}
-                    objectFit="cover"
-                    width="100%"
-                    height="100%"
-                    alt={project.Title.toString()}
-                  />
-                </Card.Body>
-                <Card.Footer>
-                  <Row>
+              <Link href={`/project/${project._id}`}>
+                <Card css={{ w: "100%", h: "400px" }} isPressable isHoverable>
+                  <Card.Header
+                    css={{
+                      position: "absolute",
+                      zIndex: 1,
+                      top: 5,
+                    }}
+                  >
                     <Col>
-                      <User
-                        src={`https://i.pravatar.cc/300?u=${project.author_id}`}
-                        name={project.author_id}
-                        description={`@${project.author_id}`}
-
+                      <Text
+                        size={12}
+                        weight="bold"
+                        transform="uppercase"
+                        color="#9E9E9E"
+                      >
+                        {project.Genre}
+                      </Text>
+                      <Text h3 color="white">
+                        {project.Title}
+                      </Text>
+                    </Col>
+                  </Card.Header>
+                  <Card.Body css={{ p: 0 }}>
+                    {project.HeaderImage && (
+                      <Card.Image
+                        src={project.HeaderImage}
+                        objectFit="cover"
+                        width="100%"
+                        height="100%"
+                        alt={project.Title.toString()}
                       />
-                    </Col>
-                    <Col>
-                      <Row justify="flex-end">
-                        {project.GoldenButton && (
-                          <Badge color="warning">Golden Button</Badge>
-                        )}
-                      </Row>
-                    </Col>
-                  </Row>
-                </Card.Footer>
-              </Card>
+                    )}
+                  </Card.Body>
+                  <Card.Footer>
+                    <Row>
+                      <Col>
+                        <User
+                          src={`https://i.pravatar.cc/300?u=${project.author_id}`}
+                          name={project.author_id}
+                          description={`@${project.author_id}`}
+                        />
+                      </Col>
+                      <Col>
+                        <Row justify="flex-end">
+                          {project.GoldenButton && (
+                            <Badge color="warning">Golden Button</Badge>
+                          )}
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Card.Footer>
+                </Card>
+              </Link>
             </Grid>
           ))}
         </Grid.Container>
