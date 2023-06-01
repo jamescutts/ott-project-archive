@@ -17,6 +17,7 @@ import {
 
 type Props = {
   projects: [Project];
+  count: number | undefined;
 };
 
 type Author = {
@@ -32,11 +33,15 @@ export type Project = {
 
   Url: string;
 
+  LastUpdated: Date;
+
   Description?: string;
 
   HeaderImage?: string;
 
   author_id?: string;
+
+  Author?: Author;
 
   Game?: string;
 
@@ -54,39 +59,44 @@ export const getServerSideProps = async () => {
     const res = await fetch(`${process.env.API_URL}projects`);
     let projects = await res.json();
 
+    const cres = await fetch(`${process.env.API_URL}projects/count`);
+    let count = await cres.json();
+
     return {
-      props: { projects: JSON.parse(JSON.stringify(projects)) },
+      props: { projects: JSON.parse(JSON.stringify(projects)), count: count },
     };
   } catch (error) {
     console.error(error);
     return {
-      props: { projects: [] },
+      props: { projects: [], count: undefined },
     };
   }
 };
 
 export default function Posts(props: Props) {
   const [projects, setProjects] = useState<[Project]>(props.projects);
+  const [count, setCount] = useState<number|undefined>(props.count);
 
   return (
     <Layout>
       <header className="store-hero">
         <Spacer y={2} />
         <Container lg>
-          <Card variant="bordered">
+          <Card
+            variant="bordered"
+            css={{
+              backgroundImage:
+                "linear-gradient(45deg, #5699b6 -20%, #3a7792 50%)",
+            }}
+          >
             <Card.Body css={{ padding: "$24" }}>
-              <Text
-                h1
-                css={{
-                  textGradient: "45deg, #5699b6 -20%, #3a7792 50%",
-                }}
-              >
-                Welcome to the OnTableTop Project Archive
-              </Text>
+              <Text h1>Welcome to the OnTableTop Project Archive</Text>
               <Text size={24}>
                 This project aims to create an mirror of project content from
                 OnTableTop for archival purposes.
               </Text>
+              <Spacer y={1} />
+                <Badge size="xl" disableOutline color="success" variant="flat">{count} Projects Archived</Badge>
             </Card.Body>
           </Card>
         </Container>
@@ -108,7 +118,22 @@ export default function Posts(props: Props) {
           {projects.map((project, index) => (
             <Grid
               xs={
-                index === 0 || index === 4 || index === 10 || index === 15 || index === 17 || index === 19
+                index === 0 ||
+                index === 5 ||
+                index === 10 ||
+                index === 15 ||
+                index === 18 ||
+                index === 23
+                  ? 12
+                  : 6
+              }
+              sm={
+                index === 0 ||
+                index === 4 ||
+                index === 10 ||
+                index === 15 ||
+                index === 17 ||
+                index === 19
                   ? 6
                   : 3
               }
@@ -116,6 +141,20 @@ export default function Posts(props: Props) {
             >
               <Link href={`/project/${project._id}`}>
                 <Card css={{ w: "100%", h: "400px" }} isPressable isHoverable>
+                  {project.GoldenButton && (
+                    <Badge
+                      color="warning"
+                      css={{
+                        position: "absolute",
+                        zIndex: 2,
+                        top: 15,
+                        right: 15,
+                      }}
+                      size={"sm"}
+                    >
+                      Golden Button
+                    </Badge>
+                  )}
                   <Card.Header
                     css={{
                       position: "absolute",
@@ -149,22 +188,15 @@ export default function Posts(props: Props) {
                     )}
                   </Card.Body>
                   <Card.Footer>
-                    <Row>
-                      <Col>
-                        <User
-                          src={`https://i.pravatar.cc/300?u=${project.author_id}`}
-                          name={project.author_id}
-                          description={`@${project.author_id}`}
-                        />
-                      </Col>
-                      <Col>
-                        <Row justify="flex-end">
-                          {project.GoldenButton && (
-                            <Badge color="warning">Golden Button</Badge>
-                          )}
-                        </Row>
-                      </Col>
-                    </Row>
+                    <User
+                      src={
+                        project.Author
+                          ? project.Author.ImageUrl
+                          : `https://i.pravatar.cc/300?u=${project.author_id}`
+                      }
+                      name={project.author_id}
+                      description={`@${project.author_id}`}
+                    />
                   </Card.Footer>
                 </Card>
               </Link>

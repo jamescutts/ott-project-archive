@@ -5,9 +5,9 @@ export default async (req, res) => {
     const client = await clientPromise;
     const db = client.db("archive");
 
-    const projects = await db.collection("projects").find().sort({LastUpdated: -1}).limit(42).toArray();
+    const count = await db.collection("projects").countDocuments();
 
-    res.json(projects);
+    res.json(count);
   } catch (e) {
     console.error(e);
     throw new Error(e).message;

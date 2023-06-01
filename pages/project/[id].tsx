@@ -72,7 +72,7 @@ export default function ProjectPage(props: Props) {
           )}
           <Container sm>
             <Spacer y={1} />
-            <h1>{project?.Title}</h1>
+            <Text h1>{project?.Title}</Text>
             {project?.GoldenButton && (
               <Badge color="warning" isSquared size="lg">
                 Golden Button
@@ -93,7 +93,7 @@ export default function ProjectPage(props: Props) {
                   size="lg"
                 />
               </Col>
-              <Col css={{ flex: 1}}>
+              <Col css={{ flex: 1 }}>
                 <Link href={project?.Url.toString()} target="_blank">
                   <Button>View OnTableTop</Button>
                 </Link>
