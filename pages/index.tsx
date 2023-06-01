@@ -108,7 +108,7 @@ export default function Posts(props: Props) {
           {projects.map((project, index) => (
             <Grid
               xs={
-                index === 0 || index === 4 || index === 10 || index === 15
+                index === 0 || index === 4 || index === 10 || index === 15 || index === 17 || index === 19
                   ? 6
                   : 3
               }
