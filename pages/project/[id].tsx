@@ -60,7 +60,10 @@ export default function ProjectPage(props: Props) {
         <>
           <Head>
             <title>{project.Title} | OnTableTop Project Archive</title>
-            <meta name="description" content={project.Description?.substring(0, 160)} />
+            <meta
+              name="description"
+              content={project.Description?.substring(0, 160)}
+            />
           </Head>
           {project?.HeaderImage && (
             <>
@@ -109,7 +112,7 @@ export default function ProjectPage(props: Props) {
               </Col>
             </Row>
             <Spacer y={1} />
-            <Text>{project?.Description}</Text>
+            <Text size="$xl">{project?.Description}</Text>
             <Spacer y={1} />
 
             {project?.Game && <Badge variant="bordered">{project?.Game}</Badge>}
@@ -150,11 +153,13 @@ export default function ProjectPage(props: Props) {
                             )}
                             {content.Type === "image-large" &&
                               content.Image?.Url && (
-                                <Image
-                                  src={content.Image?.Url?.toString()}
-                                  alt={content.Image?.Alt?.toString()}
-                                  objectFit="cover"
-                                />
+                                <Link href={content.Image?.Url} target="_blank">
+                                  <Image
+                                    src={content.Image?.Url?.toString()}
+                                    alt={content.Image?.Alt?.toString()}
+                                    objectFit="cover"
+                                  />
+                                </Link>
                               )}
                             {content.Type === "image-gallery" && (
                               <Grid.Container gap={1}>
@@ -162,11 +167,13 @@ export default function ProjectPage(props: Props) {
                                   <>
                                     {image.Url && (
                                       <Grid xs={6} key={image.Url}>
-                                        <Image
-                                          src={image.Url?.toString()}
-                                          alt={image.Alt?.toString()}
-                                          objectFit="cover"
-                                        />
+                                        <Link href={image?.Url} target="_blank">
+                                          <Image
+                                            src={image.Url?.toString()}
+                                            alt={image.Alt?.toString()}
+                                            objectFit="cover"
+                                          />{" "}
+                                        </Link>
                                       </Grid>
                                     )}
                                   </>
