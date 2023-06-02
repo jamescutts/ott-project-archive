@@ -19,6 +19,7 @@ import { NextPage } from "next";
 import { Project } from "..";
 import { Entry } from "../../models/entry";
 import Link from "next/link";
+import Head from "next/head";
 
 interface Props {
   project?: Project;
@@ -57,6 +58,10 @@ export default function ProjectPage(props: Props) {
     <Layout>
       {project && (
         <>
+          <Head>
+            <title>{project.Title} | OnTableTop Project Archive</title>
+            <meta name="description" content={project.Description?.substring(0, 160)} />
+          </Head>
           {project?.HeaderImage && (
             <>
               <Spacer y={2} />

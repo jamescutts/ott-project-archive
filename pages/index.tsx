@@ -14,6 +14,7 @@ import {
   Link,
   Input,
 } from "@nextui-org/react";
+import Head from 'next/head';
 
 type Props = {
   projects: [Project];
@@ -79,6 +80,10 @@ export default function Posts(props: Props) {
 
   return (
     <Layout>
+      <Head>
+        <title>OnTableTop Project Archive</title>
+        <meta name="description" content="OnTableTop Project Archive" />
+      </Head>
       <header className="store-hero">
         <Spacer y={2} />
         <Container lg>
