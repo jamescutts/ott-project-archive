@@ -75,7 +75,7 @@ export const getServerSideProps = async () => {
 
 export default function Posts(props: Props) {
   const [projects, setProjects] = useState<[Project]>(props.projects);
-  const [count, setCount] = useState<number|undefined>(props.count);
+  const [count, setCount] = useState<number | undefined>(props.count);
 
   return (
     <Layout>
@@ -96,7 +96,9 @@ export default function Posts(props: Props) {
                 OnTableTop for archival purposes.
               </Text>
               <Spacer y={1} />
-                <Badge size="xl" disableOutline color="success" variant="flat">{count} Projects Archived</Badge>
+              <Badge size="xl" disableOutline color="success" variant="flat">
+                {count} Projects Archived
+              </Badge>
             </Card.Body>
           </Card>
         </Container>
@@ -117,16 +119,7 @@ export default function Posts(props: Props) {
         <Grid.Container gap={2}>
           {projects.map((project, index) => (
             <Grid
-              xs={
-                index === 0 ||
-                index === 5 ||
-                index === 10 ||
-                index === 15 ||
-                index === 18 ||
-                index === 23
-                  ? 12
-                  : 6
-              }
+              xs={12}
               sm={
                 index === 0 ||
                 index === 4 ||
