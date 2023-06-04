@@ -128,6 +128,7 @@ export default function ProjectPage(props: Props) {
 
           {entries && (
             <>
+              <Spacer y={2} />
               {entries.map((entry) => (
                 <div>
                   <Container sm>
@@ -135,9 +136,22 @@ export default function ProjectPage(props: Props) {
                       <Card.Header>
                         <Col>
                           <Text h2>{entry.Title}</Text>
-                          <Text size={12} weight="bold" transform="uppercase">
-                            {entry.Date}
-                          </Text>
+                          <Row>
+                            <Col css={{ flex: 2}}>
+                              <Text>{entry.Date}</Text>
+                            </Col>
+                            <Col css={{ flex: 1, flexDirection: "row" }}>
+                              <Badge color="primary">
+                                Tutoring {entry.Recommendations?.Tutoring}
+                              </Badge>
+                              <Badge color="error">
+                                Skill {entry.Recommendations?.Skill}
+                              </Badge>
+                              <Badge color="warning">
+                                Idea {entry.Recommendations?.Idea}
+                              </Badge>
+                            </Col>
+                          </Row>
                         </Col>
                       </Card.Header>
                       <Card.Divider />
@@ -189,6 +203,10 @@ export default function ProjectPage(props: Props) {
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 title={entry.Title?.toString()}
+                                style={{
+                                  aspectRatio: " 16 / 9",
+                                  width: "100%",
+                                }}
                               ></iframe>
                             )}
                             <Spacer y={1} />

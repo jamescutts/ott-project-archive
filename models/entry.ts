@@ -12,7 +12,9 @@ export type Entry = {
   Date?: Date;
 
   Content?: [Content];
-};
+
+  Recommendations? :Recommendation ;
+}; 
 
 export type Content = {
   Type: string;
@@ -21,6 +23,12 @@ export type Content = {
   Images?: [Image];
   Url?: string;
 };
+
+export type Recommendation = {
+  Tutoring?: number;
+  Skill?: number;
+  Idea?: number;
+}
 
 // export class Text implements Content {
 //   Type!: string;
