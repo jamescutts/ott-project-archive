@@ -20,6 +20,7 @@ import { Project } from "..";
 import { Entry } from "../../models/entry";
 import Link from "next/link";
 import Head from "next/head";
+import { formatDistanceToNow, formatRelative, subDays } from "date-fns";
 
 interface Props {
   project?: Project;
@@ -137,9 +138,15 @@ export default function ProjectPage(props: Props) {
                         <Col>
                           <Text h2>{entry.Title}</Text>
                           <Row>
-                            <Col css={{ flex: 2}}>
-                              <Text>{entry.Date}</Text>
-                            </Col>
+                            {entry.Date && (
+                              <Col css={{ flex: 2 }}>
+                                <Text>
+                                  {formatDistanceToNow(new Date(entry.Date), {
+                                    addSuffix: true,
+                                  })}
+                                </Text>
+                              </Col>
+                            )}
                             <Col css={{ flex: 1, flexDirection: "row" }}>
                               <Badge color="primary">
                                 Tutoring {entry.Recommendations?.Tutoring}
