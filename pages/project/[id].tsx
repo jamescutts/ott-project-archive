@@ -131,7 +131,7 @@ export default function ProjectPage(props: Props) {
             <>
               <Spacer y={2} />
               {entries.map((entry) => (
-                <div>
+                <>
                   <Container sm>
                     <Card>
                       <Card.Header>
@@ -223,7 +223,7 @@ export default function ProjectPage(props: Props) {
                     </Card>
                   </Container>
                   <Spacer y={2} />
-                </div>
+                </>
               ))}
             </>
           )}

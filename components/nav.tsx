@@ -20,7 +20,7 @@ export default function Nav() {
       </Navbar.Content>
       <Navbar.Content>
         <Navbar.Item>
-          <Button auto flat as={Link} href="https://beastsofwar.com/" target="_blank">
+          <Button auto flat as={Link} href="https://beastsofwar.com/project" target="_blank">
             OnTableTop
           </Button>
         </Navbar.Item>
