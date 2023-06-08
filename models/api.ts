@@ -1,4 +1,4 @@
-import { Project } from "../pages/Project";
+import { Project } from "./Project";
 
 export interface ProjectQuery {
   info: Info;
