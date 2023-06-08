@@ -16,7 +16,7 @@ import Layout from "../../components/layout";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
-import { Project } from "..";
+import { Project } from "../Project";
 import { Entry } from "../../models/entry";
 import Link from "next/link";
 import Head from "next/head";

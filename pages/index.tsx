@@ -14,69 +14,39 @@ import {
   Link,
   Input,
 } from "@nextui-org/react";
-import Head from 'next/head';
+import Head from "next/head";
+import { ProjectQuery } from "../models/api";
+import { Project } from "../models/Project";
 
 type Props = {
-  projects: [Project];
-  count: number | undefined;
+  data: ProjectQuery;
 };
 
-type Author = {
+export type Author = {
   _id: string;
   ImageUrl: string;
-  GoldenButton: string;
-};
-
-export type Project = {
-  _id: string;
-
-  Title: string;
-
-  Url: string;
-
-  LastUpdated: Date;
-
-  Description?: string;
-
-  HeaderImage?: string;
-
-  author_id?: string;
-
-  Author?: Author;
-
-  Game?: string;
-
-  Company?: string;
-
-  Genre?: string;
-
-  Active: boolean;
-
   GoldenButton: boolean;
+  Cog: boolean;
 };
 
 export const getServerSideProps = async () => {
   try {
     const res = await fetch(`${process.env.API_URL}projects`);
-    let projects = await res.json();
-
-    const cres = await fetch(`${process.env.API_URL}projects/count`);
-    let count = await cres.json();
+    let data = await res.json();
 
     return {
-      props: { projects: JSON.parse(JSON.stringify(projects)), count: count },
+      props: { data: data },
     };
   } catch (error) {
     console.error(error);
     return {
-      props: { projects: [], count: undefined },
+      props: { data: undefined },
     };
   }
 };
 
 export default function Posts(props: Props) {
-  const [projects, setProjects] = useState<[Project]>(props.projects);
-  const [count, setCount] = useState<number | undefined>(props.count);
+  const [data, setData] = useState<ProjectQuery>(props.data);
 
   return (
     <Layout>
@@ -102,7 +72,7 @@ export default function Posts(props: Props) {
               </Text>
               <Spacer y={1} />
               <Badge size="xl" disableOutline color="success" variant="flat">
-                {count} Projects Archived
+                {data?.info?.count} Projects Archived
               </Badge>
             </Card.Body>
           </Card>
@@ -122,7 +92,7 @@ export default function Posts(props: Props) {
 
       <Container lg>
         <Grid.Container gap={2}>
-          {projects.map((project, index) => (
+          {data?.results?.map((project: Project, index) => (
             <Grid
               xs={12}
               sm={

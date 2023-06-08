@@ -15,11 +15,11 @@ import {
 } from "@nextui-org/react";
 import Head from 'next/head';
 
-export default function Authors() {
+export default function Games() {
   return (
     <Layout>
       <Head>
-        <title>Authors | OnTableTop Project Archive</title>
+        <title>Games | OnTableTop Project Archive</title>
         <meta name="description" content="OnTableTop Project Archive" />
       </Head>
       <header className="store-hero">
@@ -33,7 +33,7 @@ export default function Authors() {
             }}
           >
             <Card.Body css={{ padding: "$24" }}>
-              <Text h1>Authors</Text>
+              <Text h1>Games</Text>
               <Text size={24}>Coming soon</Text>
               <Spacer y={1} />
             </Card.Body>

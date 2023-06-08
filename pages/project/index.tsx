@@ -9,45 +9,69 @@ import {
   Spacer,
   User,
   Text,
+  Pagination,
 } from "@nextui-org/react";
 import Layout from "../../components/layout";
 import { useState } from "react";
-import { Project } from "..";
+import { Project } from "../Project";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useQuery, dehydrate, QueryClient } from "react-query";
 
-type Props = {
-  projects: [Project];
-};
-
-export const getServerSideProps = async () => {
-  try {
-    const res = await fetch(`${process.env.API_URL}projects`);
-    let projects = await res.json();
-
-    return {
-      props: { projects: JSON.parse(JSON.stringify(projects)) },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: { projects: [] },
-    };
+export default function projectsPage() {
+  const router = useRouter();
+  const [page, setPage] = useState(parseInt(router.query.page) || 1);
+  const { data } = useQuery(
+    ["projects", page],
+    async () =>
+      await fetch(`/api/projects/?page=${page}`).then(
+        (result) => result.json()
+      ),
+    {
+      keepPreviousData: true,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  function handlePaginationChange(page: number) {
+    setPage(page);
+    router.push(`project/?page=${page}`, undefined, { shallow: true });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
-};
-
-export default function Projects(props: Props) {
-  const [projects, setProjects] = useState<[Project]>(props.projects);
-
   return (
     <Layout>
       <Spacer y={2} />
       <Container lg>
+        <Text h1>Projects</Text>
         <Grid.Container gap={2}>
-          {projects.map((project) => (
-            <Grid xs={3} key={project._id}>
+          {data?.results?.map((project: Project, index: number) => (
+            <Grid
+              xs={12}
+              sm={index === 0 || index === 4 ? 6 : 3}
+              key={project._id}
+            >
               <Link href={`/project/${project._id}`}>
                 <Card css={{ w: "100%", h: "400px" }} isPressable isHoverable>
+                  {project.GoldenButton && (
+                    <Badge
+                      color="warning"
+                      css={{
+                        position: "absolute",
+                        zIndex: 2,
+                        top: 15,
+                        right: 15,
+                      }}
+                      size={"sm"}
+                    >
+                      Golden Button
+                    </Badge>
+                  )}
                   <Card.Header
-                    css={{ position: "absolute", zIndex: 1, top: 5 }}
+                    css={{
+                      position: "absolute",
+                      zIndex: 1,
+                      top: 5,
+                    }}
                   >
                     <Col>
                       <Text
@@ -70,25 +94,58 @@ export default function Projects(props: Props) {
                         objectFit="cover"
                         width="100%"
                         height="100%"
-                        alt={project.Title}
+                        alt={project.Title.toString()}
                       />
                     )}
                   </Card.Body>
-                  <Card.Footer>
-                    <Row>
+                  {project.Author && (
+                    <Card.Footer>
                       <User
-                        src={`https://i.pravatar.cc/300?u=${project.author_id}`}
+                        src={
+                          project.Author
+                            ? project.Author.ImageUrl
+                            : `https://i.pravatar.cc/300?u=${project.author_id}`
+                        }
                         name={project.author_id}
-                        bordered
+                        description={`@${project.author_id}`}
+                        bordered={project.Author.GoldenButton}
+                        color={
+                          project.Author?.GoldenButton ? "warning" : (project.Author.Cog ? "primary" : undefined)
+                        }
                       />
-                    </Row>
-                  </Card.Footer>
+                    </Card.Footer>
+                  )}
                 </Card>
               </Link>
             </Grid>
           ))}
         </Grid.Container>
+        <Spacer y={1} />
+        <Pagination
+          total={data.info.pages}
+          initialPage={page}
+          onChange={(p) => handlePaginationChange(p)}
+          siblings={3}
+          boundaries={3}
+        />
+        <Spacer y={2} />
       </Container>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context: { query: { page: string } }) {
+  let page = 1;
+  if (context.query.page) {
+    page = parseInt(context.query.page);
+  }
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
+    ["projects", page],
+    async () =>
+      await fetch(`${process.env.API_URL}projects/?page=${page}`).then(
+        (result) => result.json()
+      )
+  );
+  return { props: { dehydratedState: dehydrate(queryClient) } };
 }
