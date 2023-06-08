@@ -1,4 +1,4 @@
-import { Author } from "../pages";
+import { Author } from "./Author";
 
 
 export type Project = {

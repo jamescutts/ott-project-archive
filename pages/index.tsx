@@ -16,17 +16,10 @@ import {
 } from "@nextui-org/react";
 import Head from "next/head";
 import { ProjectQuery } from "../models/api";
-import { Project } from "../models/Project";
+import { Project } from "../models/project";
 
 type Props = {
   data: ProjectQuery;
-};
-
-export type Author = {
-  _id: string;
-  ImageUrl: string;
-  GoldenButton: boolean;
-  Cog: boolean;
 };
 
 export const getServerSideProps = async () => {

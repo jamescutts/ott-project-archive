@@ -2,7 +2,6 @@ import {
   Spacer,
   Container,
   Text,
-  Spinner,
   Image,
   User,
   Badge,
@@ -13,14 +12,12 @@ import {
   Button,
 } from "@nextui-org/react";
 import Layout from "../../components/layout";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { NextPage } from "next";
-import { Project } from "../Project";
+import { useState } from "react";
 import { Entry } from "../../models/entry";
 import Link from "next/link";
 import Head from "next/head";
-import { formatDistanceToNow, formatRelative, subDays } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
+import { Project } from "../../models/project";
 
 interface Props {
   project?: Project;

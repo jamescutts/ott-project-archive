@@ -5,7 +5,6 @@ import {
   Container,
   Grid,
   Link,
-  Row,
   Spacer,
   User,
   Text,
@@ -13,19 +12,19 @@ import {
 } from "@nextui-org/react";
 import Layout from "../../components/layout";
 import { useState } from "react";
-import { Project } from "../Project";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useQuery, dehydrate, QueryClient } from "react-query";
+import { Project } from "../../models/project";
 
 export default function projectsPage() {
   const router = useRouter();
-  const [page, setPage] = useState(parseInt(router.query.page) || 1);
+  const [page, setPage] = useState(router.query.page != undefined ? parseInt(router.query.page.toString()) : 1);
   const { data } = useQuery(
     ["projects", page],
     async () =>
-      await fetch(`/api/projects/?page=${page}`).then(
-        (result) => result.json()
+      await fetch(`/api/projects/?page=${page}`).then((result) =>
+        result.json()
       ),
     {
       keepPreviousData: true,
@@ -40,6 +39,9 @@ export default function projectsPage() {
   }
   return (
     <Layout>
+      <Head>
+        <title>Projects | OnTableTop Project Archive</title>
+      </Head>
       <Spacer y={2} />
       <Container lg>
         <Text h1>Projects</Text>
@@ -110,7 +112,11 @@ export default function projectsPage() {
                         description={`@${project.author_id}`}
                         bordered={project.Author.GoldenButton}
                         color={
-                          project.Author?.GoldenButton ? "warning" : (project.Author.Cog ? "primary" : undefined)
+                          project.Author?.GoldenButton
+                            ? "warning"
+                            : project.Author.Cog
+                            ? "primary"
+                            : undefined
                         }
                       />
                     </Card.Footer>

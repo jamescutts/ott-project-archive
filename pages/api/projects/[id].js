@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import clientPromise from "../../../lib/mongodb";
 
 export default async (req, res) => {
@@ -7,7 +6,6 @@ export default async (req, res) => {
     const id = req.query.id;
     const client = await clientPromise;
     const db = client.db("archive");
-
     const projects = db.collection("projects");
     const project = await projects.findOne({ _id: id});
     if(project){
