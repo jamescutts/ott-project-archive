@@ -5,7 +5,7 @@ export default async (req, res) => {
     const client = await clientPromise;
     const db = client.db("archive");
 
-    const posts = await db.collection("authors").find({}).limit(20).toArray();
+    const posts = await db.collection("authors").find({}).toArray();
 
     res.json(posts);
   } catch (e) {

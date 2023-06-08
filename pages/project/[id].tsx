@@ -90,6 +90,15 @@ export default function ProjectPage(props: Props) {
               </Badge>
             )}
             <Spacer y={1} />
+
+            {project?.Game && <Badge variant="bordered">{project?.Game}</Badge>}
+            {project?.Company && (
+              <Badge variant="bordered">{project?.Company}</Badge>
+            )}
+            {project?.Genre && (
+              <Badge variant="bordered">{project?.Genre}</Badge>
+            )}
+            <Spacer y={2} />
             <Row>
               <Col>
                 <User
@@ -111,15 +120,6 @@ export default function ProjectPage(props: Props) {
             </Row>
             <Spacer y={1} />
             <Text size="$xl">{project?.Description}</Text>
-            <Spacer y={1} />
-
-            {project?.Game && <Badge variant="bordered">{project?.Game}</Badge>}
-            {project?.Company && (
-              <Badge variant="bordered">{project?.Company}</Badge>
-            )}
-            {project?.Genre && (
-              <Badge variant="bordered">{project?.Genre}</Badge>
-            )}
 
             <Spacer y={2} />
           </Container>
