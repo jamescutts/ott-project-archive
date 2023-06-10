@@ -138,6 +138,7 @@ export default function projectsPage() {
           initialPage={page}
           onChange={(p) => handlePaginationChange(p)}
           siblings={2}
+          boundry={2}
         />
         <Spacer y={2} />
       </Container>
