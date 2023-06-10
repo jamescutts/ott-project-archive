@@ -18,50 +18,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useQuery, dehydrate, QueryClient } from "react-query";
 import { Project } from "../../models/project";
-import { SP } from "next/dist/shared/lib/utils";
-
-const games = [
-  { key: "black-seas", name: "Black Seas" },
-  { key: "battletech", name: "Battletech" },
-  { key: "bot-war", name: "Bot War" },
-  { key: "chain-of-command", name: "Chain of Command" },
-];
-
-const genre = [
-  { key: "historical", name: "Historical" },
-  { key: "science-fiction", name: "Science Fiction" },
-  { key: "general", name: "General" },
-  { key: "fantasy", name: "Fantasy" },
-];
-
-const company = [
-  { key: "footsore-miniatures-and-games", name: "Footsore Miniatures and Games" },
-  { key: "games-workshop", name: "Games Workshop" }
-];
 
 export default function projectsPage() {
   const router = useRouter();
   const [page, setPage] = useState(
     router.query.page != undefined ? parseInt(router.query.page.toString()) : 1
   );
-  const [selectedGame, setSelectedGame] = useState(new Set([]));
-  const selectedGameValue = useMemo(
-    () => Array.from(selectedGame).join(", ").replaceAll("_", " "),
-    [selectedGame]
-  );
-
-  const [selectedGenre, setSelectedGenre] = useState(new Set([]));
-  const selectedGenreValue = useMemo(
-    () => Array.from(selectedGenre).join(", ").replaceAll("_", " "),
-    [selectedGenre]
-  );
-
-  const [selectedCompany, setSelectedCompany] = useState(new Set([]));
-  const selectedCompanyValue = useMemo(
-    () => Array.from(selectedCompany).join(", ").replaceAll("_", " "),
-    [selectedCompany]
-  );
-
   const { data } = useQuery(
     ["projects", page],
     async () =>
@@ -89,84 +51,6 @@ export default function projectsPage() {
       <Container lg>
         <Text h1>Projects</Text>
         <Spacer y={1} />
-        <Grid.Container gap={2}>
-          <Grid>
-            <Input labelPlaceholder="Search" status="secondary" />
-          </Grid>
-          <Grid>
-            <Dropdown>
-              <Dropdown.Button
-                flat
-                color="secondary"
-                css={{ tt: "capitalize" }}
-              >
-                {selectedGameValue ? `Game : ${selectedGameValue}` : "Game"}
-              </Dropdown.Button>
-              <Dropdown.Menu
-                aria-label="Game"
-                items={games}
-                color="secondary"
-                disallowEmptySelection
-                selectionMode="single"
-                selectedKeys={selectedGame}
-                onSelectionChange={setSelectedGame}
-              >
-                {(item) => (
-                  <Dropdown.Item key={item.key}>{item.name}</Dropdown.Item>
-                )}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Grid>
-          <Grid>
-            <Dropdown>
-              <Dropdown.Button
-                flat
-                color="secondary"
-                css={{ tt: "capitalize" }}
-              >
-                {selectedGenreValue ? `Genre : ${selectedGenreValue}` : "Genre"}
-              </Dropdown.Button>
-              <Dropdown.Menu
-                aria-label="Game"
-                items={genre}
-                color="secondary"
-                disallowEmptySelection
-                selectionMode="single"
-                selectedKeys={selectedGenre}
-                onSelectionChange={setSelectedGenre}
-              >
-                {(item) => (
-                  <Dropdown.Item key={item.key}>{item.name}</Dropdown.Item>
-                )}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Grid>
-          <Grid>
-            <Dropdown>
-              <Dropdown.Button
-                flat
-                color="secondary"
-                css={{ tt: "capitalize" }}
-              >
-                {selectedCompanyValue ? `Company : ${selectedCompanyValue}` : "Company"}
-              </Dropdown.Button>
-              <Dropdown.Menu
-                aria-label="Game"
-                items={company}
-                color="secondary"
-                disallowEmptySelection
-                selectionMode="single"
-                selectedKeys={selectedCompany}
-                onSelectionChange={setSelectedCompany}
-              >
-                {(item) => (
-                  <Dropdown.Item key={item.key}>{item.name}</Dropdown.Item>
-                )}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Grid>
-        </Grid.Container>
-
         <Grid.Container gap={2}>
           {data?.results?.map((project: Project, index: number) => (
             <Grid
