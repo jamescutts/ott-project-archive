@@ -30,7 +30,6 @@ export default function Nav() {
           Authors
         </Navbar.Link>
         <Navbar.Link href="/games">Games</Navbar.Link>
-        <Navbar.Link href="/genres">Genres</Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>
         <Navbar.Item>
