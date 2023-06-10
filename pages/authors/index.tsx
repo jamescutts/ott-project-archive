@@ -54,7 +54,6 @@ export default function Authors(props: Props) {
   const [data, setData] = useState<[Author]>(props.data);
 
   const renderCell = (author: Author, columnKey: string) => {
-    const cellValue = author[columnKey];
     switch (columnKey) {
       case "_id":
         return (
@@ -75,7 +74,7 @@ export default function Authors(props: Props) {
       case "Cog":
         return author.Cog ? <Badge color="primary">CoG Member</Badge> : <></>;
       default:
-        return cellValue;
+        return;
     }
   };
 
@@ -110,7 +109,9 @@ export default function Authors(props: Props) {
               {(item) => (
                 <Table.Row key={item._id}>
                   {(columnKey) => (
-                    <Table.Cell>{renderCell(item, columnKey)}</Table.Cell>
+                    <Table.Cell>
+                      {renderCell(item, columnKey.toString())}
+                    </Table.Cell>
                   )}
                 </Table.Row>
               )}

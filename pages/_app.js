@@ -11,7 +11,9 @@ import { useState } from "react";
 export default function App({ Component, pageProps }) {
 
   useEffect(() => {
-    clarity.init("hdnbx1x1qc");
+    if (process.env.CLARITY) {
+      clarity.init();
+    }
   })
 
   const [queryClient] = useState(() => new QueryClient());
