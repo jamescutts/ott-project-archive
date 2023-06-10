@@ -8,7 +8,7 @@ https://ott-project-archive.vercel.app/
 Coming soon
 
 ## Deployment
-The site is deployed to Vercel via commis to the the `main` branch.
+The site is deployed to Vercel via commits to the the `main` branch.
 Further details coming soon.
 
 ## Documentation
