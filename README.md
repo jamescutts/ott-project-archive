@@ -1,5 +1,6 @@
 # OnTableTop Project Archive
 ![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=ott-project-archive)
+
 This project aims to create an mirror of project content from OnTableTop for archival purposes, it is not assciated with OnTableTop.
 https://ott-project-archive.vercel.app/
 
