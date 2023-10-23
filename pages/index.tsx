@@ -82,7 +82,6 @@ export default function Posts(props: Props) {
         </Grid.Container>
       </Container>
       <Spacer y={2} /> */}
-
       <Container lg>
         <Grid.Container gap={2}>
           {data?.results?.map((project: Project, index) => (
